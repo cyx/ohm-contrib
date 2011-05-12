@@ -18,4 +18,6 @@ module Ohm
   autoload :Scope,                "ohm/contrib/scope"
   autoload :SoftDelete,           "ohm/contrib/soft_delete"
   autoload :FulltextSearching,    "ohm/contrib/fulltext_searching"
+  autoload :Looseref,             "ohm/contrib/looseref"
+  autoload :Struct,               "ohm/contrib/struct"
 end
