@@ -4,8 +4,6 @@
 #
 # License: MIT
 
-require 'yaml'
-
 module Ohm
   module Struct
     def self.included(base)
