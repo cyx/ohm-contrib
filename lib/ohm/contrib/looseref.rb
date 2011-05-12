@@ -29,11 +29,12 @@ module Ohm
       #     looseref :parent_or_sub, ParentClass
       #   end
       #
+      #   referring = ReferringClass.create()
+      #
       #   referring.parent_or_sub = ParentClass.create()
       #   referring.parent_or_sub.insubonly
       #   # => NoMethodError
       #
-      #   referring = ReferringClass.create()
       #   referring.parent_or_sub = SubClass.create(:insubonly => 1)
       #   referring.parent_or_sub.insubonly
       #   # => "1"

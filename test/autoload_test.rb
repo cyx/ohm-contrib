@@ -15,5 +15,7 @@ test "autoloading of all libraries" do
     Ohm::DateValidations
     Ohm::FulltextSearching
     Ohm::Slug
+    Ohm::Looseref
+    Ohm::Struct
   end
 end
