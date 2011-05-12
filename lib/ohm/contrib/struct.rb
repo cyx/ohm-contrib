@@ -30,20 +30,20 @@ module Ohm
       #   user.contact = Contact.new("1234", "bob@wherever.blah")
       #
       #   user.contact
-      #   => #<struct Contact phone="1234", email="bob@wherever.blah">
+      #   # => #<struct Contact phone="1234", email="bob@wherever.blah">
       #
       #
       #   user.contact.phone
-      #   => "1234"
+      #   # => "1234"
       #
       #   user.contact_Contact_phone
-      #   => "1234"
+      #   # => "1234"
       #
       #   user.contact_Contact_phone = "5678"
-      #   => "5678"
+      #   # => "5678"
       #
       #   user.contact.phone
-      #   => "5678"
+      #   # => "5678"
       #
       # @param [Symbol] name the name of the struct based attribute
       # @param [Class] struct the name of the struct class
