@@ -40,3 +40,14 @@ test "use struct without explicitly instantiating it" do
   user.undeclared.phone = "9876"
   assert user.undeclared.phone == "9876"
 end
+
+test "if struct is nil (e.g. defines nil?) then accessor returns nil if nil" do
+  class Contact
+    def nil?
+      phone.nil? && email.nil?
+    end
+  end
+  user.undeclared = Contact.new(nil, nil)
+  assert Contact.new(nil, nil).nil? == true
+  assert user.undeclared == nil
+end

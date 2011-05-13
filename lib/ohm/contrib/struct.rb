@@ -62,7 +62,8 @@ module Ohm
               model_instance.send(:"#{attr}=", value)
             end
           end
-          struct_instance
+          # If struct instance is nil, then return nil instead of the nil instance
+          struct_instance.nil? ? nil : struct_instance
         end
         
         # Struct attribute writer
