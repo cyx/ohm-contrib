@@ -47,14 +47,15 @@ module Ohm
         model = Ohm::Model::Wrapper.wrap(model)
 
         reader_id = :"#{name}_id"
-        reader_klass = :"#{name}_klass"
+        reader_class = :"#{name}_class"
         writer_id = :"#{name}_id="
-        writer_klass = :"#{name}_klass="
+        writer_class = :"#{name}_class="
 
         attributes << reader_id unless attributes.include?(reader_id)
-        attributes << reader_klass unless attributes.include?(reader_klass)
+        attributes << reader_class unless attributes.include?(reader_class)
 
         index reader_id
+        index reader_class
 
         define_method(name) do
           Object.const_get(send(reader_klass).to_sym)[send(reader_id)]
@@ -63,7 +64,7 @@ module Ohm
         define_method(:"#{name}=") do |value|
           if value.kind_of?(model.unwrap)
             send(writer_id, value ? value.id : nil)
-            send(writer_klass, value ? value.class.to_s : nil)
+            send(writer_class, value ? value.class.to_s : nil)
           end
         end
 
@@ -71,20 +72,29 @@ module Ohm
           read_local(reader_id)
         end
 
-        define_method(reader_klass) do
-          read_local(reader_klass)
+        define_method(reader_class) do
+          read_local(reader_class)
         end
 
         define_method(writer_id) do |value|
           write_local(reader_id, value)
         end
 
-        define_method(writer_klass) do |value|
-          write_local(reader_klass, value)
+        define_method(writer_class) do |value|
+          write_local(reader_class, value)
         end
         
         true
       end
+
+      # Defines a collection of objects which ha e a looseref to this model
+      def loosecol(name, model, reference = to_reference)
+        model = Ohm::Model::Wrapper.wrap(model)
+        define_method(name) do
+          model.unwrap.find(:"#{reference}_id" => send(:id), :"#{reference}_class" => self.to_s)
+        end
+      end
+
     end
   end
 end

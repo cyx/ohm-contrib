@@ -25,7 +25,7 @@ test "assign ParentClass instance" do
   end
 end
 
-test "assign ParentClass instance" do
+test "assign SubClass instance" do
   person.testref = SubClass.create(:insubonly => "test value")
   assert SubClass == person.testref.class
   assert "test value" == person.testref.insubonly
