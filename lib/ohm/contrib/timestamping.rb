@@ -22,14 +22,14 @@ module Ohm
     end
 
     def create
-      self.created_at ||= Time.now.utc.to_s
+      self.created_at ||= Time.now.utc.to_i
 
       super
     end
 
   protected
     def write
-      self.updated_at = Time.now.utc.to_s
+      self.updated_at = Time.now.utc.to_i
 
       super
     end

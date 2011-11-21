@@ -15,8 +15,8 @@ test "on create" do
   person = Person.create
   person = Person[person.id]
 
-  assert NOW.to_s == person.created_at
-  assert NOW.to_s == person.updated_at
+  assert NOW.to_i.to_s == person.created_at
+  assert NOW.to_i.to_s == person.updated_at
 end
 
 test "on update" do
@@ -26,7 +26,7 @@ test "on update" do
   person.save
   person = Person[person.id]
 
-  assert NOW.to_s == person.created_at
-  assert Time.utc(2010, 5, 13).to_s == person.updated_at
+  assert NOW.to_i.to_s == person.created_at
+  assert Time.utc(2010, 5, 13).to_i.to_s == person.updated_at
 end
 
