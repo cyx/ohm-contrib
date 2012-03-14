@@ -10,7 +10,6 @@ module Ohm
       Decimal   = lambda { |x| BigDecimal(x.to_s) }
       Float     = lambda { |x| x.to_f }
       Boolean   = lambda { |x| !x || x == 'false' ? false : true }
-      Time      = lambda { |t| t && (t.kind_of?(::Time) ? t : ::Time.parse(t)) }
       Date      = lambda { |d| d && (d.kind_of?(::Date) ? d : ::Date.parse(d)) }
       Timestamp = lambda { |t| t && UnixTime.at(t.to_i) }
       Hash      = lambda { |h| h && (h.kind_of?(::Hash) ? SerializedHash[h] : JSON(h)) }
