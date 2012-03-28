@@ -9,7 +9,6 @@ List of modules
 1. [`Ohm::Boundaries`](http://cyx.github.com/ohm-contrib/doc/Ohm/Boundaries.html)
 2. [`Ohm::Callbacks`](http://cyx.github.com/ohm-contrib/doc/Ohm/Callbacks.html)
 3. [`Ohm::Timestamping`](http://cyx.github.com/ohm-contrib/doc/Ohm/Timestamping.html)
-4. [`Ohm::ToHash`](http://cyx.github.com/ohm-contrib/doc/Ohm/ToHash.html)
 5. [`Ohm::WebValidations`](http://cyx.github.com/ohm-contrib/doc/Ohm/WebValidations.html)
 6. [`Ohm::NumberValidations`](http://cyx.github.com/ohm-contrib/doc/Ohm/NumberValidations.html)
 7. [`Ohm::ExtraValidations`](http://cyx.github.com/ohm-contrib/doc/Ohm/ExtraValidations.html)
@@ -24,7 +23,6 @@ Example usage
 
     class Post < Ohm::Model
       include Ohm::Timestamping
-      include Ohm::ToHash
       include Ohm::Boundaries
       include Ohm::WebValidations
       include Ohm::NumberValidations
