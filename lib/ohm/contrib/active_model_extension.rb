@@ -18,6 +18,10 @@ module Ohm
     def to_model
       ActiveModelInterface.new(self)
     end
+    
+    def save!
+      self.save
+    end
   end
 
   class ActiveModelInterface
