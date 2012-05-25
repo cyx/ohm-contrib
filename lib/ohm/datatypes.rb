@@ -9,8 +9,7 @@ module Ohm
       Integer   = lambda { |x| x.to_i }
       Decimal   = lambda { |x| BigDecimal(x.to_s) }
       Float     = lambda { |x| x.to_f }
-      Boolean   = lambda { |x| !!x }
-      Time      = lambda { |t| t && (t.kind_of?(::Time) ? t : ::Time.parse(t)) }
+      Boolean   = lambda { |x| !x || x == 'false' ? false : true }
       Date      = lambda { |d| d && (d.kind_of?(::Date) ? d : ::Date.parse(d)) }
       Timestamp = lambda { |t| t && UnixTime.at(t.to_i) }
       Hash      = lambda { |h| h && (h.kind_of?(::Hash) ? SerializedHash[h] : JSON(h)) }
