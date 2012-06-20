@@ -186,7 +186,7 @@ end
 
 The following lists the major changes:
 
-1. `Ohm::Typecast` has been removed in favor of `Ohm::DatTypes`.
+1. `Ohm::Typecast` has been removed in favor of `Ohm::DataTypes`.
 2. `Ohm::Timestamping` has been renamed to `Ohm::Timestamps`.
 3. `Ohm::Timestamps` now store times as a UNIX Timestamp.
 4. `All Ohm validation related plugins have been removed.
