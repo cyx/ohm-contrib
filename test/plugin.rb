@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require File.expand_path("../helper", __FILE__)
+require 'set'
 
 class Comment < Ohm::Model
   include Ohm::Timestamps
@@ -159,6 +160,8 @@ scope do
     attribute :sizes, Type::Hash
     attribute :stores, Type::Array
     attribute :published, Type::Boolean
+    attribute :state, Type::Symbol
+    attribute :comments, Type::Set
   end
 
   test "Type::Integer" do
@@ -268,5 +271,30 @@ scope do
     p = Product[p.id]
     assert_equal "false", p.key.hget(:published)
     assert_equal false, p.published
+  end
+
+  test "Type::Symbol" do
+    p = Product.new(:state => 'available')
+
+    assert_equal :available, p.state
+    p.save
+
+    p = Product[p.id]
+    assert_equal :available, p.state
+  end
+
+  test "Type::Set" do
+    comments = ::Set.new(["Good product", "Awesome!", "Great."])
+    p = Product.new(:comments => comments)
+    puts p.comments.class.superclass.name
+    puts p.comments.class.name
+    assert p.comments.kind_of?(::Set)
+
+    p.save
+
+    p = Product[p.id]
+    assert_equal comments, p.comments
+    assert_equal %Q(["Awesome!","Good product","Great."]), p.key.hget(:comments)
+    assert_equal %Q(["Awesome!","Good product","Great."]), p.comments.to_s
   end
 end
