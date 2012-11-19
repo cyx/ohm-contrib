@@ -207,7 +207,7 @@ The following lists the major changes:
     See [scrivener][scrivener] instead.
 5. `Ohm::Boundaries` has been removed.
 6. Ohm::Contrib no longer uses `autoload`. You can either
-   `require 'ohm/contrib', which requires everything, or you
+   `require 'ohm/contrib'`, which requires everything, or you
    can `require ohm/datatypes` for example if you want to cherry
    pick your requires.
 7. `Ohm::Callbacks` no longer provides macro style callbacks, i.e.
