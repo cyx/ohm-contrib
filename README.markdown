@@ -149,7 +149,7 @@ class Post < Ohm::Model
   attribute :title
 
   def to_s
-    self.title.clone
+    title.dup
   end
 end
 
