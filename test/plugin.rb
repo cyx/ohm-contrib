@@ -271,6 +271,12 @@ scope do
     p = Product[p.id]
     assert_equal "false", p.key.hget(:published)
     assert_equal false, p.published
+
+    p2 = Product.new(:published => '')
+    assert_equal false, p2.published
+
+    p2.save
+    assert_equal false, p2.published
   end
 
   test "Type::Symbol" do
