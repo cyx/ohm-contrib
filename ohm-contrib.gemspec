@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = "ohm-contrib"
 
-  s.add_dependency "ohm", "2.0.0.alpha4"
+  s.add_dependency "ohm", "2.0.0.alpha5"
 
   s.add_development_dependency "cutest"
   s.add_development_dependency "override"
