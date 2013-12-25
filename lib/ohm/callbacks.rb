@@ -22,7 +22,7 @@ module Ohm
   #     end
   #   end
   module Callbacks
-    def save!
+    def save
       is_new = new?
 
       before_create if is_new

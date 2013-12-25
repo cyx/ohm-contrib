@@ -8,9 +8,7 @@ module Ohm
     # Lock the object before executing the block, and release it once the block
     # is done.
     #
-    # @example
-    #
-    #   post = Order.create(:customer => Customer.create)
+    #   post = Order.create(customer: Customer.create)
     #   post.mutex(0.01) do
     #     # this block is in a mutex!
     #   end
@@ -29,11 +27,11 @@ module Ohm
     #
     # @see Model#mutex
     def lock!(wait = 0.1)
-      until key[:_lock].setnx(lock_timeout)
-        next unless lock = key[:_lock].get
+      until redis.call("SETNX", key[:_lock], lock_timeout)
+        next unless lock = redis.call("HGET", key[:_lock])
         sleep(wait) and next unless lock_expired?(lock)
 
-        break unless lock = key[:_lock].getset(lock_timeout)
+        break unless lock = redis.call("GETSET", key[:_lock], lock_timeout)
         break if lock_expired?(lock)
       end
     end
@@ -41,14 +39,14 @@ module Ohm
     # Release the lock.
     # @see Model#mutex
     def unlock!
-      key[:_lock].del
+      redis.call("DEL", key[:_lock])
     end
 
     def lock_timeout
       Time.now.to_f + 1
     end
 
-    def lock_expired? lock
+    def lock_expired?(lock)
       lock.to_f < Time.now.to_f
     end
   end

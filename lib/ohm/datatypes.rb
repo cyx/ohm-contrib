@@ -7,23 +7,22 @@ require "set"
 module Ohm
   module DataTypes
     module Type
-      Integer   = lambda { |x| x.to_i }
-      Decimal   = lambda { |x| BigDecimal(x.to_s) }
-      Float     = lambda { |x| x.to_f }
-      Symbol    = lambda { |x| x.to_sym }
-      Boolean   = lambda { |x| Ohm::DataTypes.bool(x) }
-      Time      = lambda { |t| t && (t.kind_of?(::Time) ? t : ::Time.parse(t)) }
-      Date      = lambda { |d| d && (d.kind_of?(::Date) ? d : ::Date.parse(d)) }
-      Timestamp = lambda { |t| t && UnixTime.at(t.to_i) }
-      Hash      = lambda { |h| h && SerializedHash[h.kind_of?(::Hash) ? h : JSON(h)] }
-      Array     = lambda { |a| a && SerializedArray.new(a.kind_of?(::Array) ? a : JSON(a)) }
-      Set       = lambda { |s| s && SerializedSet.new(s.kind_of?(::Set) ? s : JSON(s)) }
+      Integer   = ->(x) { x.to_i }
+      Decimal   = ->(x) { BigDecimal(x.to_s) }
+      Float     = ->(x) { x.to_f }
+      Symbol    = ->(x) { x && x.to_sym }
+      Boolean   = ->(x) { Ohm::DataTypes.bool(x) }
+      Time      = ->(t) { t && (t.kind_of?(::Time) ? t : ::Time.parse(t)) }
+      Date      = ->(d) { d && (d.kind_of?(::Date) ? d : ::Date.parse(d)) }
+      Timestamp = ->(t) { t && UnixTime.at(t.to_i) }
+      Hash      = ->(h) { h && SerializedHash[h.kind_of?(::Hash) ? h : JSON(h)] }
+      Array     = ->(a) { a && SerializedArray.new(a.kind_of?(::Array) ? a : JSON(a)) }
+      Set       = ->(s) { s && SerializedSet.new(s.kind_of?(::Set) ? s : JSON(s)) }
     end
 
     def self.bool(val)
       case val
-      when "false", "0" then false
-      when "true", "1"  then true
+      when "true", "1" then true
       else
         !! val
       end

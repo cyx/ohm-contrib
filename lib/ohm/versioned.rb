@@ -1,23 +1,19 @@
 module Ohm
   module Versioned
     def self.included(model)
-      model.attribute :_version, lambda { |x| x.to_i }
+      model.attribute :_version, ->(x) { x.to_i }
     end
 
-    def save!
-      super do |t|
-        t.read do |store|
-          current_version = key.hget(:_version).to_i
+    def save
+      current_version = new? ? 0 : redis.call("HGET", key, :_version).to_i
 
-          if current_version != _version
-            raise Ohm::VersionConflict.new(attributes)
-          end
-
-          self._version = current_version + 1
-        end
-
-        yield t if block_given?
+      if current_version != _version
+        raise Ohm::VersionConflict.new(attributes)
       end
+
+      self._version = current_version + 1
+
+      super
     end
   end
 

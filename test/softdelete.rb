@@ -1,6 +1,5 @@
-# encoding: UTF-8
-
-require File.expand_path("./helper", File.dirname(__FILE__))
+require_relative "helper"
+require_relative "../lib/ohm/softdelete"
 
 class Person < Ohm::Model
   include Ohm::SoftDelete
@@ -23,9 +22,9 @@ test "deleted?" do
 end
 
 test "all excludes deleted records" do
-  person = Person.create(:name => "matz")
+  person = Person.create(name: "matz")
 
-  assert Person.all.first == person
+  assert_equal person, Person.all.first
 
   person.delete
 
@@ -33,48 +32,44 @@ test "all excludes deleted records" do
 end
 
 test "find does not exclude deleted records" do
-  person = Person.create(:name => "matz")
+  person = Person.create(name: "matz")
 
-  assert Person.find(:name => "matz").first == person
+  assert_equal person, Person.find(name: "matz").first
 
   person.delete
 
-  assert Person.find(:name => "matz").include?(person)
+  assert Person.find(name: "matz").include?(person)
 end
 
 test "find with many criteria doesn't exclude deleted records" do
-  person = Person.create(:name => "matz", :age => 38)
+  person = Person.create(name: "matz", age: 38)
 
-  assert Person.find(:name => "matz", :age => 38).first == person
+  assert_equal person, Person.find(name: "matz", age: 38).first
 
   person.delete
 
-  assert Person.find(:name => "matz", :age => 38).include?(person)
+  assert Person.find(name: "matz", age: 38).include?(person)
 end
 
 test "exists? returns true for deleted records" do
-  person = Person.create(:name => "matz")
-
-  person.delete
+  person = Person.create(name: "matz").delete
 
   assert Person.exists?(person.id)
 end
 
 test "Model[n] can be used to retrieve deleted records" do
-  person = Person.create(:name => "matz")
-
-  person.delete
+  person = Person.create(name: "matz").delete
 
   assert Person[person.id].deleted?
-  assert Person[person.id].name == "matz"
+  assert_equal "matz", Person[person.id].name
 end
 
 test "restoring" do
-  person = Person.create(:name => "matz")
-  person.delete
+  person = Person.create(name: "matz").delete
 
   assert Person.all.empty?
 
   person.restore
+
   assert Person.all.include?(person)
 end
