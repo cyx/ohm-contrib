@@ -43,5 +43,17 @@ module Ohm
         JSON.dump(to_a.sort)
       end
     end
+
+    if defined? ActiveSupport
+      module Type
+        HashWithIndifferentAccess = ->(h) { h && SerializedHashWithIndifferentAccess.new(h.kind_of?(::Hash) ? h : JSON(h)) }
+      end
+
+      class SerializedHashWithIndifferentAccess < ActiveSupport::HashWithIndifferentAccess
+        def to_s
+          JSON.dump(self)
+        end
+      end
+    end
   end
 end
