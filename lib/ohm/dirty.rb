@@ -19,11 +19,15 @@ module Ohm
       changed.length > 0
     end
 
+    def get_original_value(att)
+      self.send(:redis).call("HGET", self.key, att)
+    end
+
     def changes
       hash = {}
       attributes.each do |key, value|
-        if value != self.get(key)
-          hash[key] = [self.get(key), value]
+        if value != get_original_value(key)
+          hash[key] = [get_original_value(key), value]
         end
       end
       hash
@@ -32,8 +36,8 @@ module Ohm
     def changed_attributes
       hash = {}
       attributes.each do |key, value|
-        if value != self.get(key)
-          hash[key] = self.get(key)
+        if value != get_original_value(key)
+          hash[key] = get_original_value(key)
         end
       end
       hash
