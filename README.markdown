@@ -23,11 +23,11 @@ post = Post.create
 post.created_at.kind_of?(Time)
 # => true
 
-post.update_at.kind_of?(Time)
+post.updated_at.kind_of?(Time)
 # => true
 ```
 
-It's important to note that `created_at` and `update_at` both store
+It's important to note that `created_at` and `updated_at` both store
 times as a unix timestamp for efficiency.
 
 ## Ohm::Callbacks
