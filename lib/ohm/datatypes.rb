@@ -7,9 +7,9 @@ require "set"
 module Ohm
   module DataTypes
     module Type
-      Integer   = ->(x) { x.to_i }
-      Decimal   = ->(x) { BigDecimal(x.to_s) }
-      Float     = ->(x) { x.to_f }
+      Integer   = ->(x) { x && x.to_i }
+      Decimal   = ->(x) { x && BigDecimal(x.to_s) }
+      Float     = ->(x) { x && x.to_f }
       Symbol    = ->(x) { x && x.to_sym }
       Boolean   = ->(x) { !!x }
       Time      = ->(t) { t && (t.kind_of?(::Time) ? t : ::Time.parse(t)) }
