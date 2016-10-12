@@ -138,6 +138,33 @@ product.sizes == ['XS S M L XL']
 # => true
 ```
 
+## Ohm::Scope
+
+Scope allows you to create named filters on Ohm::Set.
+
+```ruby
+class Product < Ohm::Model
+  include Ohm::DataTypes
+  include Ohm::Scope
+  
+  attribute :in_stock, Type::Boolean
+  index :in_stock
+  
+  scope :in_stock?, ->() { find(in_stock: true) }
+  
+  scope do
+    def in_stock?
+      find(in_stock: true)
+    end
+  end
+end
+
+product = Product.create(in_stock: true)
+
+Product.all.in_stock?.first == product
+# => true
+```
+
 ## Ohm::Slug
 
 ```ruby
