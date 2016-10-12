@@ -160,7 +160,6 @@ class Product < Ohm::Model
 end
 
 product = Product.create(in_stock: true)
-
 Product.all.in_stock?.first == product
 # => true
 ```
