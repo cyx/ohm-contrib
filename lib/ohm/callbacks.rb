@@ -25,9 +25,15 @@ module Ohm
     def save
       is_new = new?
 
-      before_create if is_new
-      before_update if not is_new
-      before_save
+      if is_new
+        return false if before_create === false
+      end
+
+      if not is_new
+        return false if before_update === false
+      end
+
+      return false if before_save === false
 
       result = super
 
