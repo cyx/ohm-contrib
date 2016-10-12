@@ -152,8 +152,6 @@ class Product < Ohm::Model
   attribute :in_stock, Type::Boolean
   index :in_stock
   
-  scope :in_stock?, ->() { find(in_stock: true) }
-  
   scope do
     def in_stock?
       find(in_stock: true)
