@@ -48,6 +48,8 @@ in a separate object.
 
 ```ruby
 class Order < Ohm::Model
+  include Ohm::Callbacks
+
   attribute :status
 
   def before_create
