@@ -175,7 +175,7 @@ class Post < Ohm::Model
   attribute :title
 
   def to_s
-    title
+    title.dup
   end
 end
 
